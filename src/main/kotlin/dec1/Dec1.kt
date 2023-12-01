@@ -43,31 +43,25 @@ fun dec1() {
 }
 
 fun numericalValue(toCompute: String, wordValueMap: HashMap<String, Int>): Int? {
-    return if (toCompute.length == 1 && toCompute[0] in '1'..'9') {
-        toCompute[0] - '0'
-    } else if (toCompute[toCompute.length - 1] in '1'..'9') {
-        toCompute[toCompute.length - 1] - '0'
-    } else {
-        wordValueMap[toCompute]
-    }
+    return wordValueMap[toCompute]
 }
 
 fun getFirstNumber(line: String, valueMap: HashMap<String, Int>, wordDigits: WordTrie): Int? {
     var possibleDigitWord = ""
     for (c in line) {
+        if(c in '1'..'9') {
+            return c - '0'
+        }
         possibleDigitWord += c
-        val currentValue = numericalValue(possibleDigitWord, valueMap)
+        val currentValue:Int? = numericalValue(possibleDigitWord, valueMap)
         if (currentValue != null) {
             return currentValue
         }
         if (!wordDigits.containsWord(possibleDigitWord)) {
             var promisingWord = ""
-            for (cutoffPosition in possibleDigitWord.indices) {
-                val possibleSubstring = possibleDigitWord.substring(cutoffPosition)
-                if (wordDigits.containsWord(possibleSubstring)) {
-                    promisingWord = possibleSubstring
-                    continue
-                }
+            for (cutoffPosition in 1..possibleDigitWord.length) {
+                promisingWord = possibleDigitWord.substring(cutoffPosition)
+                if (wordDigits.containsWord(promisingWord)) break
             }
             possibleDigitWord = promisingWord
         }
