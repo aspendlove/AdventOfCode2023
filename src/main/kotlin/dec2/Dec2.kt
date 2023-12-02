@@ -29,9 +29,11 @@ fun dec2() {
                 highestBlue = turn.b
             }
         }
-        if(highestRed <= 12 && highestGreen <= 13 && highestBlue <= 14) {
-            runningTotal += game.id
-        }
+        // part 1
+//        if(highestRed <= 12 && highestGreen <= 13 && highestBlue <= 14) {
+//            runningTotal += game.id
+//        }
+        runningTotal += highestRed * highestBlue * highestGreen
     }
 
     println(runningTotal)
